@@ -152,7 +152,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon: const Icon(Icons.person_outline),
             color: const Color(0xFF1E293B),
             onSelected: (v) async {
-              if (v == 'logout') {
+              if (v == 'admin') {
+                Navigator.pushNamed(context, '/admin');
+              } else if (v == 'logout') {
                 final auth = context.read<AuthProvider>();
                 await auth.logout();
                 if (mounted) Navigator.pushReplacementNamed(context, '/login');
@@ -164,6 +166,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: Text(auth.user?.username ?? '',
                     style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 13)),
               ),
+              if (auth.user?.isAdmin == true)
+                const PopupMenuItem(
+                  value: 'admin',
+                  child: Row(children: [
+                    Icon(Icons.admin_panel_settings_outlined, size: 18, color: Color(0xFF60A5FA)),
+                    SizedBox(width: 8),
+                    Text('Quản lý người dùng'),
+                  ]),
+                ),
               const PopupMenuItem(value: 'logout', child: Text('Đăng xuất')),
             ],
           ),

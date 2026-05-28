@@ -4,6 +4,7 @@ import 'services/auth_service.dart';
 import 'screens/login_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/device_detail_screen.dart';
+import 'screens/admin_screen.dart';
 
 void main() {
   runApp(
@@ -64,6 +65,9 @@ class SmartHomeApp extends StatelessWidget {
           final deviceId = settings.arguments as String;
           return MaterialPageRoute(
               builder: (_) => DeviceDetailScreen(deviceId: deviceId));
+        }
+        if (settings.name == '/admin') {
+          return MaterialPageRoute(builder: (_) => const AdminScreen());
         }
         return null;
       },
