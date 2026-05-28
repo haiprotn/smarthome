@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-// Đổi thành IP backend của bạn
-// Windows desktop: dùng localhost
-// Android emulator: 10.0.2.2:8000 hoặc 10.0.3.2:8000 (Genymotion)
-// Điện thoại thật: IP LAN của máy chủ, vd: 192.168.1.x:8000
-const String kBaseUrl = 'http://localhost:8000';
+// Production VPS
+const String kBaseUrl = 'http://160.187.1.239';
+
+// Dev (bỏ comment khi dev local):
+// const String kBaseUrl = 'http://localhost:8000';     // Windows desktop
+// const String kBaseUrl = 'http://10.0.2.2:8000';     // Android emulator
+// const String kBaseUrl = 'http://10.0.3.2:8000';     // Genymotion
+// const String kBaseUrl = 'http://192.168.1.x:8000';  // Điện thoại thật LAN
 
 class ApiService {
   static Future<Map<String, String>> _headers() async {
