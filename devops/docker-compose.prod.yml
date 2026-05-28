@@ -1,0 +1,66 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    ports:
+      - "1883:1883"
+    volumes:
+      - ../mosquitto/config:/mosquitto/config
+      - mosquitto_data:/mosquitto/data
+    user: "0"
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: smarthome
+      POSTGRES_USER: smarthome
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smarthome -d smarthome"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+  backend:
+    build: ../backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://smarthome:${POSTGRES_PASSWORD}@postgres:5432/smarthome
+      REDIS_URL: redis://redis:6379
+      MQTT_HOST: ${MQTT_HOST:-mosquitto}
+      MQTT_PORT: "1883"
+      MQTT_USERNAME: ${MQTT_BACKEND_USER}
+      MQTT_PASSWORD: ${MQTT_BACKEND_PASS}
+      SECRET_KEY: ${SECRET_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      mosquitto:
+        condition: service_started
+    volumes:
+      - ../mosquitto/config:/mosquitto/config
+      - firmware_data:/app/firmware
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.25-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  mosquitto_data:
+  firmware_data:

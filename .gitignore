@@ -1,12 +1,40 @@
 __pycache__/
 *.pyc
 *.pyo
+
+# Environment
 .env
 .env.*
 !.env.example
+
+# Backend generated
 backend/app/static/
 backend/firmware/
+
+# Mosquitto
 mosquitto/config/passwd
 mosquitto/data/
+
+# Docker volumes
 postgres_data/
+
+# Logs
 *.log
+
+# Flutter / Mobile
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/build/
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/ios/.symlinks/
+mobile/ios/Pods/
+mobile/*.iml
+
+# Node / Frontend build
+frontend/node_modules/
+frontend/dist/
+
+# Claude
+.claude/
