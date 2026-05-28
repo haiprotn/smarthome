@@ -29,7 +29,9 @@ services:
     restart: unless-stopped
 
   backend:
-    build: ../backend
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
     environment:
       DATABASE_URL: postgresql+asyncpg://smarthome:${POSTGRES_PASSWORD}@postgres:5432/smarthome
       REDIS_URL: redis://redis:6379
