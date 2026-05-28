@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-// Production VPS
-const String kBaseUrl = 'http://160.187.1.239';
+// Production
+const String kBaseUrl = 'https://tncsmarthome.com';
 
 // Dev (bỏ comment khi dev local):
 // const String kBaseUrl = 'http://localhost:8000';     // Windows desktop

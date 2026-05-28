@@ -36,5 +36,8 @@ mobile/*.iml
 frontend/node_modules/
 frontend/dist/
 
+# SSL certs (chứa private key, KHÔNG commit)
+devops/ssl/
+
 # Claude
 .claude/
