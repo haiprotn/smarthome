@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+.env.*
+!.env.example
+backend/app/static/
+backend/firmware/
+mosquitto/config/passwd
+mosquitto/data/
+postgres_data/
+*.log
